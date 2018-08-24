@@ -3,11 +3,14 @@
     <title>Index</title>
 </head>
 <body>
-    <div class="header">
-        <?php require="templates/header.php"?>
+    <div class="page-header">
+        <?php require="templates/header.php";?>
     </div>
-    <div class="footer">
-        <?php require="templates/footer.php"?>
+    <div class="page-content">
+        <?php require="pagecontent/index.php";?>
+    </div>
+    <div class="page-footer">
+        <?php require="templates/footer.php";?>
     </div>
 </body>
 
