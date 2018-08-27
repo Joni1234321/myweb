@@ -1,0 +1,19 @@
+body {
+    height:100%;
+    display: grid;
+    grid-template-rows: 100px auto 100px;
+}
+
+.page-header {
+    top: 0px; width: 100%;
+    background-color: red;
+}
+
+.page-content {
+    background-color: blue;
+}
+
+.page-footer {
+    bottom: 0px; width: 100%;
+    background-color: red;
+}

@@ -1,6 +1,7 @@
 <html>
 <head> 
     <title>Index</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <div class="page-header">
