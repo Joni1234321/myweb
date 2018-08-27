@@ -1,3 +1,3 @@
 <?php
-echo("<h2> footer </h2>");
+    echo file_get_contents("C:/Users/Jas/OneDrive - AARHUS TECH/Programmer/Websites/MyWeb/templates/html/footer.html");
 ?>
