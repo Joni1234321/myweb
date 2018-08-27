@@ -1,3 +1,3 @@
 <?php
-echo="<h2> haeder </h2>";
+echo("<h2> header </h2>");
 ?>
