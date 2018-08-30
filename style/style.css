@@ -1,11 +1,22 @@
 body {
     height: 98%;
     display: grid;
-    grid-template-columns: 50px auto;
+    grid-template-columns: 60px auto;
 }
 
 .page-sidebar {
-    background-color: red;    
+    background-color: #ff0000;    
+}
+.page-sidebar .navbox{
+    width: 30px;    height: 30px;
+    padding:15px 15px;
+}
+.page-sidebar .navbox:hover{
+    background-color: #d82607;
+}
+.page-sidebar .navbox img{
+    width: 100%;
+
 }
 
 .page-content {
