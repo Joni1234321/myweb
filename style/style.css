@@ -3,11 +3,11 @@ body {
     display: grid;
     grid-template-columns: 60px auto;
     background-color: white;
-    color: black;
+    color: #011103;
 }
 /*=========================================================*/
 .page-sidebar {
-    background-color: #ff0000;    
+    background-color: #326614b0;    
 }
 .page-sidebar .navbox{
     width: 30px;    height: 30px;
@@ -15,10 +15,10 @@ body {
     transition: all 0.3s ease;
 }
 .page-sidebar .navbox:hover{
-    background-color: #c0381f;
+    background-color: #1b5f15;
 }
 .page-sidebar .navbox img{
-    width: 100%;
+    width: 30px;
 }
 /*=========================================================*/
 .page-content {
@@ -26,20 +26,20 @@ body {
     display: grid;
     grid-template-rows: 70px auto;
 }
-.page-content>* {
-    padding:  0px 10px 0px 10px;
-}
 
 #headline {
-    background-color: #ffffe0 ;
-    border-bottom: 1px solid black;
+    margin: 0px 50px;
+    border-bottom: 1px solid rgb(134, 133, 51);
 }
+#headline>* {
+    text-align: center;
+}
+
 #content {
     overflow: auto;
+    margin-left: 50px;
 }
-.page-content h1 {
-    margin: 0px;
-}
+
 
 
 /*=========================================================*/
