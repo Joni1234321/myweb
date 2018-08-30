@@ -1,3 +1,3 @@
 <?php
-echo("<h1>Hej med dig</h1>");
+    echo file_get_contents("C:/Users/bruger/OneDrive - AARHUS TECH/Programmer/Websites/MyWeb/pagecontent/html/index.html");
 ?>

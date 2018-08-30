@@ -1,0 +1,21 @@
+body {
+    height:100%;
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+.page-sidebar {
+    top: 0px; width: 100%;
+    background-color: red;
+    
+}
+
+.page-content {
+    overflow: auto;
+    background-color: blue;
+}
+
+.page-footer {
+    bottom: 0px; width: 100%;
+    background-color: red;
+}
