@@ -10,9 +10,6 @@
     <div class="page-content">
         <?php require("pagecontent/index.php");?>
     </div>
-    <div class="page-footer">
-        <?php require("templates/footer.php");?>
-    </div>
 </body>
 
 </html>

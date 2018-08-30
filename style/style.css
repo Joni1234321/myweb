@@ -1,7 +1,7 @@
 body {
     height:100%;
     display: grid;
-    grid-template-rows: 100px auto 100px;
+    grid-template-columns: 100px auto;
 }
 
 .page-header {
