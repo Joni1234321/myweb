@@ -10,14 +10,16 @@ body {
 .page-sidebar .navbox{
     width: 30px;    height: 30px;
     padding:15px 15px;
+    transition: all 0.3s ease;
 }
 .page-sidebar .navbox:hover{
-    background-color: #d82607;
+    background-color: #c0381f;
 }
 .page-sidebar .navbox img{
     width: 100%;
 
 }
+
 
 .page-content {
     overflow: auto;
