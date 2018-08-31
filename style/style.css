@@ -24,12 +24,12 @@ body {
 .page-content {
     height: 98vh;
     display: grid;
-    grid-template-rows: 70px auto;
+    grid-template-rows: 60px auto;
 }
 
 #headline {
     margin: 0px 50px;
-    border-bottom: 1px solid rgb(134, 133, 51);
+    border-bottom: 2px solid rgb(134, 133, 51);
 }
 #headline>* {
     text-align: center;
