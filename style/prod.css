@@ -1,0 +1,36 @@
+.product {
+    float: left;
+    border: solid #ebebeb;
+    border-width: 2px;
+
+    width: 300px;
+    height: 185px;
+    margin: 10px 15px;
+    text-align: center; 
+}
+.product:hover {
+    border: outset black;
+    border-width: 2px;
+    transition: all 0.3s ease;
+}
+.product .thumbnail{
+   height: 100px;
+   margin: 15px 0px 10px 0px;
+}
+
+.product .title {
+    margin: 0px;
+    color:black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product .description {
+    margin-top: 14px;
+    padding: 0px 10px;
+    color: #929292;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
