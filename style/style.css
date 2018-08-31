@@ -22,7 +22,7 @@ body {
 }
 /*=========================================================*/
 .page-content {
-    height: 98vh;
+    height: 95vh;
     display: grid;
     grid-template-rows: 60px auto;
 }
@@ -37,7 +37,8 @@ body {
 
 #content {
     overflow: auto;
-    margin-left: 50px;
+    margin: 0px 50px;
+    background-color:#fafafa;
 }
 
 
