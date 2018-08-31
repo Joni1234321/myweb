@@ -4,6 +4,7 @@ body {
     grid-template-columns: 60px auto;
     background-color: white;
     color: #011103;
+    margin: 4px;
 }
 /*=========================================================*/
 .page-sidebar {
@@ -22,7 +23,7 @@ body {
 }
 /*=========================================================*/
 .page-content {
-    height: 95vh;
+    height: calc(100vh - 8px);
     display: grid;
     grid-template-rows: 60px auto;
 }
@@ -40,8 +41,6 @@ body {
     margin: 0px 50px;
     background-color:#fafafa;
 }
-
-
 
 /*=========================================================*/
 .page-footer {
