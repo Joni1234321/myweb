@@ -2,6 +2,7 @@
 <head> 
     <title>Projects</title>
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/proj.css">
 </head>
 <body>
     <div class="page-sidebar">

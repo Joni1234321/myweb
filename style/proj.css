@@ -1,35 +1,35 @@
-.productgrid {
+.projectgrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
-.product {
+.project {
     border: solid #ebebeb;
     border-width: 2px;
     width: 300px;
-    height: 185px;
+    height: 86px;
     text-align: center;
     background-color: white; 
-    
 }
-.product:hover {
+
+.project:hover {
     border: outset black;
     border-width: 2px;
     transition: all 0.3s ease;
 }
 
-.product .thumbnail{
-   height: 100px;
-   margin: 15px 0px 10px 0px;
+.project .status{
+    width: 30px;
+    height: 100%;
+    float: left;
 }
 
-.product .title {
-    margin: 0px;
+.project .title {
     color:black;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.product .description {
+.project .description {
     margin-top: 14px;
     padding: 0px 10px;
     color: #929292;
@@ -38,9 +38,10 @@
     text-overflow: ellipsis;
 }
 
-.productgrid a {
+.projectgrid a {
     outline: 0;
     text-decoration: none;
-    margin: 10px 15px;
+    margin: 10px 15px;  
     width: 300px;
+
 }
