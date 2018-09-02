@@ -17,19 +17,19 @@
     transition: all 0.3s ease;
 }
 
-.product .thumbnail{
+.product>.thumbnail{
    height: 100px;
    margin: 15px 0px 10px 0px;
 }
 
-.product .title {
+.product>.title {
     margin: 0px;
     color:black;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.product .description {
+.product>.description {
     margin-top: 14px;
     padding: 0px 10px;
     color: #929292;
@@ -38,9 +38,9 @@
     text-overflow: ellipsis;
 }
 
-.productgrid a {
+.productgrid>a {
     outline: 0;
     text-decoration: none;
-    margin: 10px 15px;
+    margin: 10px 0px;
     width: 300px;
 }

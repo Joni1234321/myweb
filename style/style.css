@@ -45,6 +45,9 @@ body {
     background-color:#fafafa;
 }
 
+#content>* {
+    margin: 10px;
+}
 /*=========================================================*/
 .page-footer {
     bottom: 0px; width: 100%;

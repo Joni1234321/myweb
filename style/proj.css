@@ -4,10 +4,6 @@
     grid-gap: 30px;
 }
 
-.projectgrid * h2 {
-    margin-left: 10px;
-}
-
 .project {
     border: solid #ebebeb;
     border-width: 2px;
@@ -15,7 +11,6 @@
     height: 86px;
     text-align: center;
     background-color: white; 
-    margin: 0px 10px;
 }
 
 .project:hover {
@@ -24,19 +19,19 @@
     transition: all 0.3s ease;
 }
 
-.project .status{
+.project>.status{
     width: 30px;
     height: 100%;
     float: left;
 }
 
-.project .title {
+.project>.title {
     color:black;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.project .description {
+.project>.description {
     margin-top: 14px;
     padding: 0px 10px;
     color: #929292;
@@ -45,21 +40,25 @@
     text-overflow: ellipsis;
 }
 
-.projectgrid * a {
+.projectgrid>*>a {
     outline: 0;
     text-decoration: none;
     margin: 10px 15px;  
     width: 300px;
 }
 
+.projectgrid h2 {
+    margin-top: 0px;
+}
+
 /*=========================================================*/
 
-.project-done .project .status {
+.project-done .status {
     background-color: green;
 }
-.project-work .project .status{
+.project-work .status{
     background-color: red;
 }
-.project-think .project .status{
+.project-think .status{
     background-color: black;
 }
