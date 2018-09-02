@@ -21,6 +21,9 @@ body {
 .page-sidebar .navbox img{
     width: 30px;
 }
+.page-sidebar a {
+    outline: 0;
+}
 /*=========================================================*/
 .page-content {
     height: calc(100vh - 8px);

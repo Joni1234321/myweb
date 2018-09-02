@@ -1,7 +1,13 @@
 .projectgrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: 300px 300px 300px;
+    grid-gap: 30px;
 }
+
+.projectgrid * h2 {
+    margin-left: 10px;
+}
+
 .project {
     border: solid #ebebeb;
     border-width: 2px;
@@ -9,6 +15,7 @@
     height: 86px;
     text-align: center;
     background-color: white; 
+    margin: 0px 10px;
 }
 
 .project:hover {
@@ -38,10 +45,21 @@
     text-overflow: ellipsis;
 }
 
-.projectgrid a {
+.projectgrid * a {
     outline: 0;
     text-decoration: none;
     margin: 10px 15px;  
     width: 300px;
+}
 
+/*=========================================================*/
+
+.project-done .project .status {
+    background-color: green;
+}
+.project-work .project .status{
+    background-color: red;
+}
+.project-think .project .status{
+    background-color: black;
 }
