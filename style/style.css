@@ -4,6 +4,7 @@ body {
     grid-template-columns: 60px auto;
     background-color: white;
     color: #011103;
+    margin: 4px;
 }
 /*=========================================================*/
 .page-sidebar {
@@ -20,9 +21,12 @@ body {
 .page-sidebar .navbox img{
     width: 30px;
 }
+.page-sidebar a {
+    outline: 0;
+}
 /*=========================================================*/
 .page-content {
-    height: 98vh;
+    height: calc(100vh - 8px);
     display: grid;
     grid-template-rows: 60px auto;
 }
@@ -37,10 +41,9 @@ body {
 
 #content {
     overflow: auto;
-    margin-left: 50px;
+    margin: 0px 50px;
+    background-color:#fafafa;
 }
-
-
 
 /*=========================================================*/
 .page-footer {
