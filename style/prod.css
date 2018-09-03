@@ -1,7 +1,6 @@
 .productgrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-
+    grid-template-columns: repeat(auto-fit, 320px);
 }
 
 .product {
@@ -43,6 +42,6 @@
 .productgrid>a {
     outline: 0;
     text-decoration: none;
-    margin: 10px 0px;
+    margin: 0px 0px 20px 0px;
     width: 300px;
 }

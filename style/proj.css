@@ -1,5 +1,4 @@
 .projectgrid {
-    margin-top: 10px;
     display: grid;
     grid-template-columns: 300px 300px 300px;
     grid-gap: 30px;
@@ -41,7 +40,7 @@
     text-overflow: ellipsis;
 }
 
-.projectgrid>*>a {
+.projectgrid>*>a , .projectgrid>a {
     outline: 0;
     text-decoration: none;
     margin: 10px 15px;  
