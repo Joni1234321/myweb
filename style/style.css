@@ -45,9 +45,11 @@ body {
     background-color:#fafafa;
 }
 
-#content>* {
-    margin: 10px;
+#content> :first-child {
+    margin-left: 10px;
+    margin-right: 
 }
+
 /*=========================================================*/
 .page-footer {
     bottom: 0px; width: 100%;

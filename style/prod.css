@@ -1,7 +1,9 @@
 .productgrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
 }
+
 .product {
     border: solid #ebebeb;
     border-width: 2px;
