@@ -1,11 +1,13 @@
 .productgrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, 400px);
+    grid-gap: 10px 20px;
 }
+
 .product {
     border: solid #ebebeb;
     border-width: 2px;
-    width: 300px;
+    width: 400px;
     height: 185px;
     text-align: center;
     background-color: white; 
@@ -17,19 +19,19 @@
     transition: all 0.3s ease;
 }
 
-.product .thumbnail{
+.product>.thumbnail{
    height: 100px;
    margin: 15px 0px 10px 0px;
 }
 
-.product .title {
+.product>.title {
     margin: 0px;
     color:black;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.product .description {
+.product>.description {
     margin-top: 14px;
     padding: 0px 10px;
     color: #929292;
@@ -38,9 +40,9 @@
     text-overflow: ellipsis;
 }
 
-.productgrid a {
+.productgrid>a {
     outline: 0;
     text-decoration: none;
-    margin: 10px 15px;
+    margin: 0px;
     width: 300px;
 }

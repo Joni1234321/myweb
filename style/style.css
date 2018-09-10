@@ -40,9 +40,14 @@ body {
 }
 
 #content {
+    padding: 10px 10px 0px 10px;
     overflow: auto;
     margin: 0px 50px;
     background-color:#fafafa;
+}
+
+#content h2 {
+    margin: 0px 0px 10px 0px;
 }
 
 /*=========================================================*/

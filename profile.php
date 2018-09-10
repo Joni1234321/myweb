@@ -1,14 +1,17 @@
 <html>
 <head> 
-    <title>Home</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/prod.css">
+    <link rel="stylesheet" href="style/prof.css">
+    <link rel="stylesheet" href="style/proj.css">
 </head>
 <body>
     <div class="page-sidebar">
         <?php require("templates/sidebar.php");?>
     </div>
     <div class="page-content">
-        <?php require("pagecontent/index.php");?>
+        <?php require("pagecontent/profile.php");?>
     </div>
 </body>
 
