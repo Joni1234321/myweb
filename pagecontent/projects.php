@@ -7,8 +7,7 @@
         echo "  <div id='headline'>
                         <h2>Projects</h2>
                 </div>
-                <div id='content'>
-                <div class='projectgrid'>";
+                <div id='content'><div class='projectgrid'>";
 
 
         // Create connection
@@ -38,5 +37,10 @@
         $conn->close();
 
         //Closing divs
-        echo "</div> </div>"
+        echo "</div> 
+        <form action='scripts/sort.php' method='get'>
+        <input type='button' value='Sort' style='width: 100px;float:right;'></input>
+        </form>
+        </div>
+        ";
 ?>
