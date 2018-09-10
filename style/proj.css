@@ -1,13 +1,13 @@
 .projectgrid {
     display: grid;
-    grid-template-columns: 300px 300px 300px;
-    grid-gap: 30px;
+    grid-template-columns: 400px 400px 400px;
+    grid-gap: 10px 20px;
 }
 
 .project {
     border: solid #ebebeb;
     border-width: 2px;
-    width: 300px;
+    width: 400px;
     height: 86px;
     text-align: center;
     background-color: white; 
@@ -43,8 +43,8 @@
 .projectgrid>*>a , .projectgrid>a {
     outline: 0;
     text-decoration: none;
-    margin: 10px 15px;  
-    width: 300px;
+    margin: 0px;  
+    width: 400px;
 }
 
 .projectgrid h2 {
@@ -56,9 +56,20 @@
 .project-done .status {
     background-color: green;
 }
+
 .project-work .status{
     background-color: red;
 }
 .project-think .status{
     background-color: black;
+}
+
+.project-done>a>.project {
+    margin-bottom: 10px;
+}
+.project-work>a>.project {
+    margin-bottom: 10px;
+}
+.project-think>a>.project {
+    margin-bottom: 10px;
 }

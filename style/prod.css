@@ -1,12 +1,13 @@
 .productgrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 320px);
+    grid-template-columns: repeat(auto-fit, 400px);
+    grid-gap: 10px 20px;
 }
 
 .product {
     border: solid #ebebeb;
     border-width: 2px;
-    width: 300px;
+    width: 400px;
     height: 185px;
     text-align: center;
     background-color: white; 
@@ -42,6 +43,6 @@
 .productgrid>a {
     outline: 0;
     text-decoration: none;
-    margin: 0px 0px 20px 0px;
+    margin: 0px;
     width: 300px;
 }
