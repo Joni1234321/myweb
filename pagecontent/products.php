@@ -1,14 +1,16 @@
 <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "myweb";
+
     echo "  <div id='headline'>
                 <h2>Products</h2>
             </div>
             <div id='content'>
             <div class='productgrid'>";
     
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "myweb";
+
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -18,7 +20,7 @@
     }
 
     
-    $sql = "SELECT id, thumbnail, title, descr FROM product";
+    $sql = "SELECT id, thumbnail, title, descr FROM products";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -36,5 +38,6 @@
     }
     $conn->close();
 
+    //Closing divs
     echo "</div> </div>"
 ?>
