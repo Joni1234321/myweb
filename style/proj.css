@@ -1,6 +1,6 @@
 .projectgrid {
     display: grid;
-    grid-template-columns: 400px 400px 400px;
+    grid-template-columns: repeat(3, 400px);
     grid-gap: 10px 20px;
 }
 
@@ -51,17 +51,22 @@
     margin-top: 0px;
 }
 
+.projectsubgrid {
+    display: grid;
+    grid-gap: 10px 0px;
+}
+
 /*=========================================================*/
 
 .project-done .status {
-    background-color: green;
+    background-color: rgb(85, 255, 7);
 }
 
 .project-work .status{
-    background-color: red;
+    background-color: rgb(92, 188, 243);
 }
 .project-think .status{
-    background-color: black;
+    background-color: rgb(214, 214, 214);
 }
 
 .project-done>a>.project {

@@ -38,9 +38,7 @@
 
         //Closing divs
         echo "</div> 
-        <form action='scripts/sort.php' method='get'>
-        <input type='button' value='Sort' style='width: 100px;float:right;'></input>
-        </form>
+        <input type='button' onclick='sortbystatus()' value='Sort by status' style='width: 100px;float:right;'></input>
         </div>
         ";
 ?>
