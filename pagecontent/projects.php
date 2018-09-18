@@ -18,7 +18,7 @@
         }
 
 
-        $sql = "SELECT id, st, title, descr, link FROM projects";
+        $sql = "SELECT id, st, title, descr, link FROM proj";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {

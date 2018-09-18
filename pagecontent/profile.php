@@ -21,7 +21,7 @@
         <div class='viewer productgrid'>
     ";
 
-    $sql = "SELECT id, thumbnail, title, descr FROM products";
+    $sql = "SELECT id, thumbnail, title, descr FROM prod";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -44,7 +44,7 @@
     <h2>Projects: </h2>
     <div class='viewer projectgrid'>";
     
-    $sql = "SELECT id, st, title, descr, link FROM projects";
+    $sql = "SELECT id, st, title, descr, link FROM proj";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {

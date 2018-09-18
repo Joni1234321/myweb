@@ -20,7 +20,7 @@
     }
 
     
-    $sql = "SELECT id, thumbnail, title, descr FROM products";
+    $sql = "SELECT id, thumbnail, title, descr FROM prod";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
