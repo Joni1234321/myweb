@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style/proj.css">
 </head>
 <body>
+    <?php require("pagecontent/scripts/redirect.php");?>
     <div class="page-sidebar">
         <?php require("templates/sidebar.php");?>
     </div>

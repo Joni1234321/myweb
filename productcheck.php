@@ -1,6 +1,6 @@
 <html>
 <head> 
-    <title>Login</title>
+    <title>Check Product</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/prod.css">
 </head>
@@ -9,7 +9,7 @@
         <?php require("templates/sidebar.php");?>
     </div>
     <div class="page-content">
-        <?php require("pagecontent/login.php");?>
+        <?php require("pagecontent/check_product.php");?>
     </div>
 </body>
 
