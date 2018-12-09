@@ -1,42 +1,28 @@
 <?php
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "myweb";
+    echo "
+    <div id='content'>
+    ";
 
-    echo "  <div id='headline'>
-                    <h2>Profile</h2>
-            </div>
-            <div id='content'>";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-    }
     //=============================================================================//
     echo "<h2> Products </h2>
         <div class='viewer productgrid'>
     ";
 
-    $sql = "SELECT id, thumbnail, title, descr FROM prod";
-    $result = $conn->query($sql);
+    //Get the products from the user who is currently logged in
+    $products = $this->get_products($this->get_user_id());
 
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo "
-            <a href='products.php'><div class='product' id='" . $row["id"] . "'>
-            <img class='thumbnail' src='". $row["thumbnail"] . "'>
-            <p class='title'>" . $row["title"] . " </p>
-            <p class='description'>" . $row["descr"] . " </p>
-            </div> </a>";
-        }
-    } else {
-        echo "0 results";
+    //No products error message
+    if ($products == null){
+        echo "<p> There are 0 Products here </p>";
     }
+
+    //Print all the products
+    else { 
+        while($row = $products->fetch_assoc()) {
+            $this->create_product($row);
+        }
+    }      
+
 
     //=============================================================================//
 
@@ -44,23 +30,20 @@
     <h2>Projects: </h2>
     <div class='viewer projectgrid'>";
     
-    $sql = "SELECT id, st, title, descr, link FROM proj";
-    $result = $conn->query($sql);
+    //Get the projects from the user who is currently logged in
+    $projects = $this->get_projects($this->get_user_id());
 
-    if ($result->num_rows > 0) {
-            // output data of each row
-            while($row = $result->fetch_assoc()) {
-            echo "
-            <a href='" . $row["link"] . "'><div class='project project-" . $row["st"] . "' id='" . $row["id"] . "'>
-            <div class='status'> </div>
-            <p class='title'>" . $row["title"] . " </p>
-            <p class='description'>" . $row["descr"] . " </p>
-            </div> </a>";
-            }
-    } else {
-            echo "0 results";
+    //No projects error message
+    if ($projects == null){
+        echo "<p> There are 0 projects here </p>";
     }
-    $conn->close();
+
+    //Print all the projects
+    else { 
+        while($row = $projects->fetch_assoc()) {
+            $this->create_project($row);
+        }
+    }  
 
     //Closing divs
     echo "</div> </div>"

@@ -1,16 +1,8 @@
-<html>
-<head> 
-    <title>Check Product</title>
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/prod.css">
-</head>
-<body>
-    <div class="page-sidebar">
-        <?php require("templates/sidebar.php");?>
-    </div>
-    <div class="page-content">
-        <?php require("pagecontent/check_product.php");?>
-    </div>
-</body>
-
-</html>
+<?php 
+    require_once("cms.php");
+    $cms = new CMS (
+        "Check Product", 
+        "Check Product",
+        "pagecontent/check_product.php"
+    );    
+?>

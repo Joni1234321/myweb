@@ -1,5 +1,24 @@
 <?php
-    echo file_get_contents("C:/Users/Jonas/OneDrive - AARHUS TECH/Programmer/Websites/MyWeb/templates/html/sidebar.html");
+    
+    echo '
+    <a href="profile">
+        <div class="navbox">
+            <img src="img/icons/prof.png">
+        </div>
+    </a>
+
+    <a href="products">
+        <div class="navbox">
+            <img src="img/icons/prod.png">
+        </div>
+    </a>
+
+    <a href="projects">
+        <div class="navbox">
+            <img src="img/icons/proj.png">
+        </div>
+    </a>
+    ';
 
     echo "    
     <a href='" . button_state() . ".php'>

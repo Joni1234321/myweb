@@ -1,10 +1,4 @@
 <?php 
-    echo "
-    <div id='headline'>
-        <h2>Logout</h2>
-    </div>";
-    
-
     //Unset cookies
     unsetCookie("auth_token");
     unsetCookie("user_id");
@@ -14,5 +8,4 @@
     function unsetCookie ($cookie_name) {
         setcookie($cookie_name, "", 1, "/");
     }
-
 ?> 
