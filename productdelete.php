@@ -4,5 +4,5 @@
         "Delete Product", 
         "Delete Product",
         "pagecontent/delete_product.php"
-    );    
+    );
 ?>

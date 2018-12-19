@@ -1,0 +1,32 @@
+.tableofcontent {
+    margin: 10px;
+}
+
+.tableofcontent>a {
+    outline: 0;
+    text-decoration: none;
+    margin: 0px;  
+}
+
+.page {
+    display: inline;
+}
+.page>p {
+
+    padding: 3px 10px;
+    margin: 0 -2px -4px 0;
+
+    display: inline-block;
+
+    overflow: hidden;
+    color: black;
+
+    background-color: rgb(1, 155, 1);
+
+
+
+    -moz-border-radius: 10px / 5px;
+    -webkit-border-radius: 10px / 5px;
+
+    border-radius: 10px / 5px;
+}

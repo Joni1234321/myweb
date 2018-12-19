@@ -40,7 +40,7 @@
             setcookie("user_id", $user_id, $time_stored, "/");  //Cookie is et to expire in 1 month
             setcookie("auth_token", $token, $time_stored, "/"); //Cookie is et to expire in 1 month
 
-            $this->redirect_to_last_page ();
+            $this->redirect_to_last_webpage ();
             
         } else {
             //LOGIN UNSUCCESFULL

@@ -1,5 +1,4 @@
-<?php
-
+<?php    
     class CMS {
         public $servername = "localhost";
         public $username = "root";
@@ -20,27 +19,58 @@
                 }
             }
 
-            $this->create_page($title, $headline, $pagecontent);
+            $this->create_webpage($title, $headline, $pagecontent);
 
         }
 
-        //DIFFERENCE BETWEEN CREATE AND PRINT IS THE PARAMETER
+        //DIFFERENCE BETWEEN PRINT AND CREATE IS THE PARAMETER
         //============================================================//
-        //CREATE         
+        #region PRINT
 
-        private function create_page ($title, $headline, $pagecontent) {
-            echo "<html>";
+        //Prints the form used to login with        
+        public function print_login_form () {
+            echo "
+			<form action='logincheck.php' method='post'>
+			<input type='text' name='username' placeholder='Username'> <br>
+			<input type='password' name='password' placeholder='Password'> <br>
+			<input type='checkbox' name='remember' value='remember'> Remember me <br>
+			<button type='submit'> Submit </button>
+            ";
+        }
 
-            $this->create_page_template($title);
+        //Prints the form to create a product
+        public function print_create_product_form () {
+            echo "  
+            <form action='productcheck.php' method='post' enctype='multipart/form-data'>
+            <input type='text' name='title' placeholder='Title'> <br>
+            <input type='text' name='description' placeholder='Description'> <br>
+            <input type='file' name='fileToUpload' id='fileToUpload'> <br>
+            <button type='submit'> Submit </button>
+            ";
+        }
 
-            $this->create_page_content($pagecontent, $headline);
+        //Prints the form to create a project
+        public function print_create_project_form () {
+            
+        }
+
+        #endregion
+        //============================================================//
+        #region CREATE
+
+        private function create_webpage ($title, $headline, $pagecontent) {
+                echo "<html>";
+
+                $this->create_webpage_template($title);
+
+                $this->create_webpage_content($pagecontent, $headline);
 
             echo "</html>";
         }
 
         //Creates the title, css and sidebar
-        private function create_page_template ($title) {
-            echo '
+        private function create_webpage_template ($title) {
+            echo '  
             <head> 
                 <title>' . $title . '</title>
                 ' . $this->css . '
@@ -53,11 +83,11 @@
 
                 echo "
                 </div>
-                "; 
+            ";
         }
 
         //Creates the headline and requires the pagecontent file
-        private function create_page_content ($pagecontent, $headline) {
+        private function create_webpage_content ($pagecontent, $headline) {
             echo '<div class="page-content">';
             
             //Create headline
@@ -94,8 +124,47 @@
             ";
         }
 
+        //Requires an array of 1 page as parameter
+        public function create_page ($page) {
+            $title = htmlspecialchars($page["title"], ENT_QUOTES, 'UTF-8');
+            //Makes every space to a +
+            $url = str_replace (" ", "+", $title);
+            echo "
+            <a href='prodview.php?id=1&page=" . $url ."'>
+                <div class='page'>
+                    <p> " . $title . " </p>
+                </div>
+            </a>            
+            ";
+        }        
+
+        //Requires an array of 1 project as parameter
+        public function create_product_tableofcontent ($prod_id) {
+            echo "    
+            <div class='tableofcontent'>
+            ";
+            //Get the pages from the user who is currently logged in
+            $pages = $this->get_product_pages($prod_id);
+
+
+            //Print all the pages
+            //NO PAGES ERROR
+            if ($pages == null){
+                echo "<p> There are 0 Pages here </p>";
+            }
+            else {
+                foreach ($pages as $page) {
+                    $this->create_page($page);
+                }
+            } 
+
+            echo" </div> ";
+
+        }        
+
+        #endregion
         //============================================================//
-        //GET
+        #region GET
 
         //Returns an array of the products the user has
         public function get_products ($user_id) {
@@ -122,6 +191,20 @@
             }
         }
 
+        //Returns the state of the product   
+        public function get_product_access ($prod_id){
+            //Get the state of the product access
+            $sql = "SELECT state FROM prod_acc WHERE user_id = ? AND prod_id = ?";
+            $state = $this->db_query($sql, "ii", array($this->get_user_id(), $prod_id));
+
+            //Return null if no access is found
+            if (!isset($state)) {
+                return null;
+            }
+
+            return $state[0]["state"];
+        }
+        
         //Returns an array of the projects the user has
         public function get_projects ($user_id) {
             //Get the product ids which the user is connected to
@@ -147,8 +230,217 @@
             }
         }
 
+        //Returns an array of the pages the product has
+        public function get_product_pages ($prod_id) {
+            //Get the pages which the user is connected to
+            $sql = "SELECT id, title FROM page WHERE prod_id = ?";
+            $pages = $this->db_query($sql, "i", array($prod_id));
+            
+            //NO PAGES CONNECTED TO PRODUCT
+            if (!isset($pages)){
+                return null;
+            }
+            //GET THE PAGE
+            return $pages;          
+        }
+        
+
+        //Return the user id
+        public function get_user_id (){
+            if (!isset($_COOKIE["auth_token"]))
+            {
+                return null;
+            }
+
+            $token = $_COOKIE["auth_token"];
+            $result = $this->db_query(
+                "SELECT user_id FROM user_auth WHERE token = ? AND ip_address = ?", 
+                "ss", 
+                array($token, $_SERVER["REMOTE_ADDR"])
+            );
+
+            while($sqlvalue = $result){
+                //USERDATA['id'] is the id of the user that logged in
+                return ($sqlvalue[0]['user_id']);
+            }
+        }
+
+        //Retuns the page id
+        public function get_page_id ($prod_id, $page_title) {
+            //Get id of the selected page
+            $sql = "
+            SELECT page.id
+            FROM page
+            INNER JOIN prod_acc
+            ON page.prod_id = prod_acc.prod_id
+            WHERE prod_acc.user_id = ?  AND page.prod_id = ? AND page.title = ?                     
+            ";
+            $user_id = $this->get_user_id();
+            $result = $this->db_query ($sql, "iis", array($user_id, $prod_id, $page_title));
+
+            while($sqlvalue = $result){
+                //USERDATA['id'] is the id of the user that logged in
+                return ($sqlvalue[0]['id']);
+            }
+        }        
+
+        #endregion
         //============================================================//
-        //EXIST
+        #region INSERT
+
+        //Put product in db
+        public function insert_product ($imagepath, $title, $description) {
+
+            $imagepath = htmlspecialchars($imagepath, ENT_QUOTES, 'UTF-8');
+            $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+            $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
+
+
+            $sql = "
+                INSERT INTO prod ( thumbnail, title, description) VALUES ( ?, ?, ? )
+            ";
+            //PROD
+            $prod_id = $this->db_query_id($sql, "sss", array ($imagepath, $title, $description));
+            
+            //PROD_ACC
+            $this->insert_product_acc($this->get_user_id(), $prod_id);    
+            
+            //PAGE
+            $page_id = $this->insert_page($prod_id, $title);
+
+            //PAGE_SECT
+            $sect_id = $this->insert_page_sect($page_id, $description, "bold");
+
+        }
+
+        //Put product access in db
+        private function insert_product_acc ($user_id, $product_id) {
+
+            $sql = "SELECT state FROM prod_acc WHERE user_id = ? AND prod_id = ?";
+            $access_state = $this->db_query($sql, "ii",array ($user_id, $product_id));
+
+            //TODO Implement view option
+            //CHECK IF THE ACCES ALREADY EXISTS, IF SO THEN DONT DO ANYTHING
+            if (!isset($access_state)) {
+                $sql = "
+                INSERT INTO prod_acc (user_id, prod_id, state) VALUES ( ?, ?, ? )
+                ";
+
+                $this->db_query_no_return($sql, "iis", array ($user_id, $product_id, "edit"));
+            }
+        }
+
+        //Put page in db
+        public function insert_page ($prod_id, $title) {
+            //TODO WRITE THIS METHOD
+        }
+
+        
+        //Put page section in db
+        public function insert_page_sect ($page_id, $text, $font) {
+            //Font is set to normal by default
+            if ($font === null) {
+                $font = "normal";    
+            }
+            
+            $sql = "
+            INSERT INTO page_sect (text, font)
+            VALUES ( ?, ? )
+            ";
+
+            $sect_id = $this->db_query_id ($sql, "ss", array($text, $font));
+
+            //PAGE_SECT_ACC
+            $this->insert_page_sect_acc($page_id, $sect_id);
+
+            return $sect_id;
+            
+        }        
+
+        //Put page section access in db
+        private function insert_page_sect_acc ($page_id, $sect_id) {
+            
+            $sql = "
+            INSERT INTO page_sect_acc (page_id, sect_id)
+            VALUES ( ?, ? )
+            ";
+
+            $this->db_query_no_return ($sql, "ii", array($page_id, $sect_id));
+
+        }
+
+        #endregion
+        //============================================================//
+        #region DELETE
+        
+        //Deletes the product access from the db
+        //If it is the last access to the product then the product would also be deleted
+        public function delete_product ($product_id){
+
+            $user_id = $this->get_user_id();
+            
+            //If product access exists
+            if ($this->exist_product_acc($product_id) == 1)
+            {
+                //Delete product acces from product access table
+                $sql = "DELETE FROM prod_acc WHERE prod_id = ? AND user_id = ?";
+                $this->db_query_no_return($sql, "ii", array($product_id, $user_id));
+
+                //If all connections to the product has been erased, delete the product
+                $sql = "SELECT id FROM prod_acc WHERE prod_id = ?";
+                $remaining_connections = $this->db_query($sql, "i", array($product_id));
+
+            
+                if (!isset($remaining_connections)){
+                    //Delete Prod, Page, Page_sect and Page_sect_acc by joining them together
+                    $sql = "
+                    DELETE page_sect, page_sect_acc, page, prod
+                    FROM page_sect 
+                    INNER JOIN page_sect_acc
+                    ON page_sect.id = page_sect_acc.sect_id
+                    INNER JOIN page
+                    ON page_sect_acc.page_id = page.id
+                    INNER JOIN prod 
+                    ON page.prod_id = prod.id
+                    WHERE prod_id = ?
+                    ";
+                    $this->db_query_no_return($sql, "i", array($product_id));
+
+                    //Delete
+                    return "The product was deleted";
+                }
+
+                return "The product connection was deleted";
+            }
+            else {
+                return "No product found";
+            }
+        }
+
+        
+        //Deletes the page from the db
+        public function delete_page ($page_id){
+       
+            //Delete Prod, Page, Page_sect and Page_sect_acc by joining them together
+            $sql = "
+            DELETE page_sect, page_sect_acc, page
+            FROM page_sect 
+            INNER JOIN page_sect_acc
+            ON page_sect.id = page_sect_acc.sect_id
+            INNER JOIN page
+            ON page_sect_acc.page_id = page.id
+            WHERE page_id = ?
+            ";
+            $this->db_query_no_return($sql, "i", array($page_id));
+
+            //Delete
+            return "The page was deleted";
+
+        }        
+
+        #endregion
+        //============================================================//
+        #region EXIST
         
 
         //Returns 1 or 0
@@ -172,41 +464,12 @@
             return 0;
         }        
 
+        #endregion
         //============================================================//
-        //PRINT
-
-        //Prints the form used to login with        
-        public function print_login_form () {
-            echo "
-			<form action='logincheck.php' method='post'>
-			<input type='text' name='username' placeholder='Username'> <br>
-			<input type='password' name='password' placeholder='Password'> <br>
-			<input type='checkbox' name='remember' value='remember'> Remember me <br>
-			<button type='submit'> Submit </button>
-            ";
-        }
-
-        //Prints the form to create a product
-        public function print_create_product_form () {
-            echo "  
-            <form action='productcheck.php' method='post' enctype='multipart/form-data'>
-            <input type='text' name='title' placeholder='Title'> <br>
-            <input type='text' name='description' placeholder='Description'> <br>
-            <input type='file' name='fileToUpload' id='fileToUpload'> <br>
-            <button type='submit'> Submit </button>
-            ";
-        }
-
-        //Prints the form to create a project
-        public function print_create_project_form () {
-            
-        }
-
-        //============================================================//
-        //REDIRECT 
+        #region REDIRECT
 
         //Redirects to the last page that wasn't a page with login
-        public function redirect_to_last_page (){
+        public function redirect_to_last_webpage (){
             if (isset($_COOKIE["lastpage"])){
                 header("location:" . urldecode($_COOKIE["lastpage"]));
             }
@@ -215,22 +478,9 @@
             }
         }
 
-        public function access_product ($prod_id){
-            //Get the state of the product access
-            $sql = "SELECT state FROM prod_acc WHERE user_id = ? AND prod_id = ?";
-            $state = $this->db_query($sql, "ii", array($this->get_user_id(), $prod_id));
-
-            //Return null if no access is found
-            if (!isset($state)) {
-                return null;
-            }
-
-            return $state[0]["state"];
-        }
-
-
+        #endregion
         //============================================================//
-        //MYSQL QUERIES
+        #region MYSQL QUERIES
 
         //UNSAFE: NOT SAFE FOR USER INPUT
         //ONLY USE FOR STATIC PURPOSES
@@ -335,30 +585,11 @@
             $conn->close();
 
             return $id;
-        }        
-
-        //============================================================//
-        //MYSQL SCRIPTS 
-
-        //Return the user id
-        public function get_user_id (){
-            if (!isset($_COOKIE["auth_token"]))
-            {
-                return null;
-            }
-
-            $token = $_COOKIE["auth_token"];
-            $result = $this->db_query(
-                "SELECT user_id FROM user_auth WHERE token = ? AND ip_address = ?", 
-                "ss", 
-                array($token, $_SERVER["REMOTE_ADDR"])
-            );
-
-            while($userdata = $result){
-                //USERDATA['id'] is the id of the user that logged in
-                return ($userdata[0]['user_id']);
-            }
         }
+
+        #endregion
+        //============================================================//
+        #region MYSQL SCRIPTS
 
         //Generates a token
         public function generate_token ($length){
@@ -391,69 +622,9 @@
             $this->db_query_no_return($sql, "sss", $params);
         }
 
-
-        //Put product in db
-        public function db_insert_product ($imagepath, $title, $description) {
-            $sql = "
-                INSERT INTO prod ( thumbnail, title, description) VALUES ( ?, ?, ? )
-            ";
-            $product_id = $this->db_query_id($sql, "sss", array ($imagepath, $title, $description));
-            
-            $this->db_insert_product_acc($this->get_user_id(), $product_id);    
-        }
-
-        //Put product access in db
-        private function db_insert_product_acc ($user_id, $product_id) {
-
-            $sql = "SELECT state FROM prod_acc WHERE user_id = ? AND prod_id = ?";
-            $access_state = $this->db_query($sql, "ii",array ($user_id, $product_id));
-
-            //TODO Implement view option
-            //CHECK IF THE ACCES ALREADY EXISTS, IF SO THEN DONT DO ANYTHING
-            if (!isset($access_state)) {
-                $sql = "
-                INSERT INTO prod_acc (user_id, prod_id, state) VALUES ( ?, ?, ? )
-                ";
-
-                $this->db_query_no_return($sql, "iis", array ($user_id, $product_id, "edit"));
-            }
-        }
-
-        //Deletes the product access from the db
-        //If it is the last access to the product then the product would also be deleted
-        public function db_delete_product ($product_id){
-
-            $user_id = $this->get_user_id();
-            
-            //If product access exists
-            if ($this->exist_product_acc($product_id) == 1)
-            {
-                //Delete product acces from product access table
-                $sql = "DELETE FROM prod_acc WHERE prod_id = ? AND user_id = ?";
-                $this->db_query_no_return($sql, "ii", array($product_id, $user_id));
-
-                //If all connections to the product has been erased, delete the product
-                $sql = "SELECT id FROM prod_acc WHERE prod_id = ?";
-                $remaining_connections = $this->db_query($sql, "i", array($product_id));
-
-                if (!isset($remaining_connections)){
-                    //Delete product from product table
-                    $sql = "DELETE FROM prod WHERE id = ?";
-                    $this->db_query_no_return($sql, "i", array($product_id));
-                
-                    return "The product was deleted";
-                }
-
-                return "The product connection was deleted";
-            }
-            else {
-                return "No product found";
-            }
-        }
-
-
+        #endregion
         //============================================================//
-        //FILE MANAGEMENT
+        #region FILE MANAGEMENT
 
         //Checks if it is ok to upload image
         public function upload_image ($image_filetype){
@@ -492,16 +663,21 @@
             { return false; }
         }
 
+        #endregion
         //============================================================//
+
 
         private $css = '
         <link rel="stylesheet" href="style/home.css">
         <link rel="stylesheet" href="style/prod.css">
+        <link rel="stylesheet" href="style/prod-view.css">
         <link rel="stylesheet" href="style/prof.css">
         <link rel="stylesheet" href="style/proj-view.css">
         <link rel="stylesheet" href="style/proj.css">
         <link rel="stylesheet" href="style/style.css">'
         ; 
     }
+
+    //htmlspecialchars($imagepath, ENT_QUOTES, 'UTF-8')
 
 ?>

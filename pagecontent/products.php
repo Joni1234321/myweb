@@ -19,7 +19,6 @@
     if ($products == null){
         echo "<p> There are 0 Products here </p>";
     }
-
     //Print all the products
     else { 
         while($row = $products->fetch_assoc()) {

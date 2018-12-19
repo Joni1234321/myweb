@@ -1,10 +1,14 @@
 <?php 
-    echo "<div id='content'>";
-    //#region
-    echo "no";
-    //#endregion
-    echo ($this->db_delete_product(24));
+    echo "<script>   
+    setTimeout(function () {
+       window.location.href = 'products.php';
+    }, 10000); </script>";
 
-    echo "</div>";
+    echo "<div id='content'>";
+
+    echo ($this->delete_product(82));
+
+    echo "</div>";  
     
+
 ?>

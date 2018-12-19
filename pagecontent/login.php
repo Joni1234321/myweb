@@ -18,7 +18,7 @@
 				setcookie("auth_token", $token, $time_stored, "/");
 
 				//Redirect to the last page 
-				$this->redirect_to_last_page ();
+				$this->redirect_to_last_webpage ();
 			}
 			else {
 				//ERROR MESSAGE
