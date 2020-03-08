@@ -22,10 +22,6 @@
 
             $this->create_webpage($title, $headline, $pagecontent);
 
-            
-
-
-
         }
 
         //DIFFERENCE BETWEEN PRINT AND CREATE IS THE PARAMETER
@@ -213,7 +209,7 @@
             
             
             //ECHO
-            echo "<div id=" . $id . " class='section' onclick='sectionEdit(" . $id . ")' >";
+            echo "<div id=" . $id . " class='section'  >";
             if (isset($image)) {
                 //TODO DISPLAY IMAGE
             }
