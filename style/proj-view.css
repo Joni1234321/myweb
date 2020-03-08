@@ -1,0 +1,50 @@
+.canvasmodel {
+    margin: 0px 10px;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(80px, 120px));
+    grid-template-rows: repeat(3, 200px);
+    grid-template-areas: 
+    'part part act act val val rel rel cust cust'
+    'part part res res val val cha cha cust cust'
+    'cost cost cost cost cost rev rev rev rev rev';
+    grid-gap: 10px;
+}
+.canvasmodel>div {
+    background-color: #f5f1f1;
+    padding: 5px;
+}
+
+.canvasmodel>.partners {
+    grid-area: part;
+}
+.canvasmodel>.activities {
+    grid-area: act;
+}
+.canvasmodel>.value {
+    grid-area: val;
+}
+.canvasmodel>.relationships {
+    grid-area: rel;
+}
+.canvasmodel>.customer {
+    grid-area: cust;
+}
+.canvasmodel>.resources {
+    grid-area: res;
+}
+.canvasmodel>.channels {
+    grid-area: cha;
+}
+.canvasmodel>.cost {
+    grid-area: cost;
+}
+.canvasmodel>.revenue {
+    grid-area: rev;
+}
+
+.canvasmodel>div>h4 {
+    margin: 0;
+}
+.canvasmodel>div>p {
+    margin:0;
+}

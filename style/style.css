@@ -6,6 +6,11 @@ body {
     color: #011103;
     margin: 4px;
 }
+
+textarea {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 /*=========================================================*/
 .page-sidebar {
     background-color: #326614b0;    
@@ -40,7 +45,7 @@ body {
 }
 
 #content {
-    padding: 10px 10px 0px 10px;
+    padding: 0px 10px 0px 10px;
     overflow: auto;
     margin: 0px 50px;
     background-color:#fafafa;

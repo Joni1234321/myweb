@@ -1,4 +1,71 @@
 <?php
-    echo file_get_contents("C:/Users/Jonas/OneDrive - AARHUS TECH/Programmer/Websites/MyWeb/pagecontent/html/index.html");
+    echo '
+    <div id='content'>
+        <div>
+            <h2>Navigation</h2>
+            <p>This here is default text</p>
+            <p>Overfloæw</p>
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>   
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>    
+            <p>Overflow</p>
+        </div>
+    </div>
+    ';
 
 ?>
