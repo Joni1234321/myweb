@@ -1,19 +1,19 @@
 <?php
     
     echo '
-    <a href="profile">
+    <a href="profile.php">
         <div class="navbox">
             <img src="img/icons/prof.png">
         </div>
     </a>
 
-    <a href="products">
+    <a href="products.php">
         <div class="navbox">
             <img src="img/icons/prod.png">
         </div>
     </a>
 
-    <a href="projects">
+    <a href="projects.php">
         <div class="navbox">
             <img src="img/icons/proj.png">
         </div>

@@ -1,6 +1,6 @@
 <?php
     echo '
-    <div id="content">
+    <div id='content'>
         <div>
             <h2>Navigation</h2>
             <p>This here is default text</p>

@@ -1,6 +1,6 @@
 <?php
     echo '
-    <div id="content">
+    <div id='content'>
         <div class="canvasmodel">
             <div class="partners">
                 <h4>Key Partners</h4>

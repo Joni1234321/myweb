@@ -5,7 +5,10 @@
     //description
     //fileToUpload
     //Returns to the creation page if they are not filled
-    if (!isset($_POST["title"]) || !isset($_POST["description"]) || !isset($_FILES["fileToUpload"])){
+    if ($_POST["title"] == "" || 
+        $_POST["description"] == "" ||
+        $_FILES["fileToUpload"]["name"] == "")
+    {
         header("location:productcreate");
     }
     else {
@@ -39,9 +42,9 @@
         //Upload to temp folder
         if ($this->upload_image($extension)){
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $tmp_dir . $tmp_file_name)) {
-                echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded. <br>";
+                echo "<p> The image has been uploaded. </p>";
             } else {
-                echo "Sorry, there was an error uploading your file. <br>";
+                echo "<p> Sorry, there was an error uploading your file. </p> <br>";
             }
         }
 
@@ -65,49 +68,9 @@
         //Insert the products to the database
         $this->insert_product($img_path, $title, $description);
 
+        echo "<p> File has been succesfully created </p>";
         //Upload sleep
-        sleep(2);
-        header("location:products");
+        $this->redirect_delay("products", 2);
+
     }
-    //==============================================================================================================================================//
-
-    //Returns true or false wether you can upload the image or not
-    function upload_image ($imageFileType){
-        $uploadOk = 1;
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
-        }
-
-        // Check for file size 
-        if ($_FILES["fileToUpload"]["size"] > MAXFILESIZE) {
-            echo "Sorry, your file is too large. <br>";
-            $uploadOk = 0;
-        }
-        // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed. <br>";
-            $uploadOk = 0;
-        }
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.  <br>";
-        }
-
-        if ($uploadOk == 1) 
-        { return true; }
-        else 
-        { return false; }
-    }
-
-
-
 ?>

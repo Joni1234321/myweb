@@ -15,11 +15,16 @@
                 //Last visited page
                 if (!strpos($lastpage, "login")) {
                     setcookie("lastpage", $lastpage, 0, "/");
-                    header("location:login");
+                    header("location:login.php");
                 }
             }
 
+
             $this->create_webpage($title, $headline, $pagecontent);
+
+            
+
+
 
         }
 
@@ -52,6 +57,31 @@
         //Prints the form to create a project
         public function print_create_project_form () {
             
+        }
+
+        //Prints the form to create a page
+        public function print_create_page_form ($prod_id) {
+            echo "  
+            <form action='pagecheck.php?id=" . $prod_id . "' method='post'>
+                <input type='text' name='title' placeholder='Title'> <br>
+                <textarea name='section' placeholder='Description'></textarea> <br>
+            <button type='submit'> Submit </button>
+            ";
+        }    
+        
+        //Prints the form to create a page
+        public function print_create_page_section_form ($prod_id, $page_title) {
+            echo "  
+            <form action='sectioncheck.php?id=" . $prod_id . "&page=" . $page_title . "' method='post'>
+                <textarea name='text' placeholder='Text'></textarea> <br>
+            <button type='submit'> Submit </button>
+            ";
+        }      
+
+        //Prints a message saying the itemtype could not be found
+        //Itemtype could be page, product, project
+        public function print_no_access ($itemtype){
+            echo "Please select a new " . $itemtype;
         }
 
         #endregion
@@ -104,8 +134,11 @@
 
         //Requires an array of 1 product as parameter
         public function create_product ($prod) {
+            //Makes every space to a +
+            $url = str_replace (" ", "+", $prod["title"]);
+            
             echo "
-            <a href='prodview.php?id=" . $prod["id"] . "'><div class='product' id='" . $prod["id"] . "'>
+            <a href='prodview.php?id=" . $prod["id"] . "&page=" . $url . "'><div class='product' id='" . $prod["id"] . "'>
                 <img class='thumbnail' src='". $prod["thumbnail"] . "'>
                 <p class='title'>" . $prod["title"] . " </p>
                 <p class='description'>" . $prod["description"] . " </p>
@@ -125,19 +158,27 @@
         }
 
         //Requires an array of 1 page as parameter
-        public function create_page ($page) {
+        public function create_product_page ($prod_id, $page) {
             $title = htmlspecialchars($page["title"], ENT_QUOTES, 'UTF-8');
             //Makes every space to a +
             $url = str_replace (" ", "+", $title);
+
+            //IF THE CURRENT PAGE IS THE SELECTED ONE
+            $extraatt = "";
+            $current_page_id = $this->current_page_id();
+            if ($current_page_id == $page["id"]){
+                $extraatt = " id='selected-page'";
+            }
+
             echo "
-            <a href='prodview.php?id=1&page=" . $url ."'>
+            <a " . $extraatt . " href='prodview.php?id=" . $prod_id . "&page=" . $url ."'>
                 <div class='page'>
                     <p> " . $title . " </p>
                 </div>
             </a>            
             ";
-        }        
-
+        }
+        
         //Requires an array of 1 project as parameter
         public function create_product_tableofcontent ($prod_id) {
             echo "    
@@ -154,7 +195,7 @@
             }
             else {
                 foreach ($pages as $page) {
-                    $this->create_page($page);
+                    $this->create_product_page($prod_id, $page);
                 }
             } 
 
@@ -162,6 +203,108 @@
 
         }        
 
+        public function create_page_section ($sect) {
+            
+            //VARS
+            $id = $sect["id"];
+            $image = $sect["image_path"];
+            $text = $sect["text"];
+            $style = $this->font_style_to_html($sect["font_style"]);
+            
+            
+            //ECHO
+            echo "<div id=" . $id . " class='section' onclick='sectionEdit(" . $id . ")' >";
+            if (isset($image)) {
+                //TODO DISPLAY IMAGE
+            }
+            if (isset($text)) {
+
+                //DISPLAY TEXT
+                echo "<". $style . ">" . $text . "</" . $style . ">";
+            }
+            echo "</div>";
+
+        }
+
+        //Requires an id
+        public function create_page_sections ($page_id) {
+
+            //Get the sections from the page which is currently accessed
+            $sections = $this->get_product_page_sections($page_id);
+
+            //Print all the sections
+            //NO SECTIONS ERROR
+            if ($sections == null){
+                echo "<p> There are 0 Sections here </p>";
+            }
+            else {
+                foreach ($sections as $sect) {
+                    //PRINT THE SECTION
+                    $this->create_page_section($sect);
+                }
+            } 
+
+            
+        }
+
+        #endregion
+        //============================================================//
+        #region CURRENT
+        
+        //Returns the id of the currently selected product
+        public function current_product_id () {
+            
+            if (!isset($_GET["id"])) {
+                return null;
+            }
+
+            $user_id = $this->get_user_id(); 
+            $prod_id = $_GET["id"];
+            //CHECK IF IT IS ACCESSABLE
+            $sql = "
+            SELECT prod_id 
+            FROM prod_acc
+            WHERE user_id = ? AND prod_id = ?  
+            ";
+            $id = $this->db_query($sql, "ii", array ($user_id, $prod_id));
+            if(isset($id)){
+                return $id[0]["prod_id"];
+            }
+            else {
+                return null;
+            }
+        }
+
+        //Returns the id of the currently selected page
+        public function current_page_id () {
+            
+            if (!isset($_GET["page"])) {
+                return null;
+            }
+
+            //SQL VARIABLES
+            $user_id = $this->get_user_id(); 
+            $prod_id = $_GET["id"];
+            $page_title = $_GET["page"];
+
+            //CHECK IF IT IS ACCESSABLE
+            $sql = "
+            SELECT page.id 
+            FROM page
+            INNER JOIN prod_acc
+            ON prod_acc.prod_id = page.prod_id
+            WHERE prod_acc.user_id = ? AND page.prod_id = ? AND page.title = ?
+            ";
+
+            $id = $this->db_query($sql, "iis", array ($user_id, $prod_id, $page_title));
+            if(isset($id)){
+                return $id[0]["id"];
+            }
+            else {
+                return null;
+            }
+        }
+        
         #endregion
         //============================================================//
         #region GET
@@ -195,7 +338,10 @@
         public function get_product_access ($prod_id){
             //Get the state of the product access
             $sql = "SELECT state FROM prod_acc WHERE user_id = ? AND prod_id = ?";
-            $state = $this->db_query($sql, "ii", array($this->get_user_id(), $prod_id));
+
+            $user_id = $this->get_user_id();
+
+            $state = $this->db_query($sql, "ii", array($user_id, $prod_id));
 
             //Return null if no access is found
             if (!isset($state)) {
@@ -232,7 +378,7 @@
 
         //Returns an array of the pages the product has
         public function get_product_pages ($prod_id) {
-            //Get the pages which the user is connected to
+            //Get the pages which the product is connected to
             $sql = "SELECT id, title FROM page WHERE prod_id = ?";
             $pages = $this->db_query($sql, "i", array($prod_id));
             
@@ -242,6 +388,28 @@
             }
             //GET THE PAGE
             return $pages;          
+        }
+
+        //Returns an array of the sections the page has
+        public function get_product_page_sections ($page_id) {
+            //Get the sections which the page is connected to
+            $sql = "
+            SELECT page_sect_acc.id, text, image_path, font_style
+            FROM page_sect
+            INNER JOIN page_sect_acc
+            ON page_sect.id = page_sect_acc.sect_id
+            WHERE page_id = ?
+            ORDER BY page_sect_acc.id
+            ";
+            
+            $sections = $this->db_query($sql, "i", array($page_id));
+            
+            //NO SECTIONS CONNECTED TO PAGE
+            if (!isset($sections)){
+                return null;
+            }
+            //GET THE SECTIONS
+            return $sections;                      
         }
         
 
@@ -265,23 +433,24 @@
             }
         }
 
-        //Retuns the page id
-        public function get_page_id ($prod_id, $page_title) {
+        //Retuns the page title
+        //SECURED ACCESS
+        public function get_page_title ($page_id) {
             //Get id of the selected page
             $sql = "
-            SELECT page.id
+            SELECT title 
             FROM page
-            INNER JOIN prod_acc
-            ON page.prod_id = prod_acc.prod_id
-            WHERE prod_acc.user_id = ?  AND page.prod_id = ? AND page.title = ?                     
+            WHERE id = ?                   
             ";
-            $user_id = $this->get_user_id();
-            $result = $this->db_query ($sql, "iis", array($user_id, $prod_id, $page_title));
+
+            $result = $this->db_query ($sql, "i", array($page_id));
 
             while($sqlvalue = $result){
                 //USERDATA['id'] is the id of the user that logged in
-                return ($sqlvalue[0]['id']);
+                return ($sqlvalue[0]['title']);
             }
+
+            return null;
         }        
 
         #endregion
@@ -333,6 +502,14 @@
         //Put page in db
         public function insert_page ($prod_id, $title) {
             //TODO WRITE THIS METHOD
+
+            $sql = "
+            INSERT INTO page (prod_id, title)
+            VALUES ( ?, ? )
+            ";
+
+            $page_id = $this->db_query_id ($sql, "is", array($prod_id, $title));
+            return $page_id;
         }
 
         
@@ -342,9 +519,10 @@
             if ($font === null) {
                 $font = "normal";    
             }
-            
+            //echo "text: " . $text . "<br>";
+            //echo "font: " . $font . "<br>";
             $sql = "
-            INSERT INTO page_sect (text, font)
+            INSERT INTO page_sect (text, font_style)
             VALUES ( ?, ? )
             ";
 
@@ -420,7 +598,23 @@
         
         //Deletes the page from the db
         public function delete_page ($page_id){
-       
+            //Check if the page you are deleting is the main page
+            $sql = "
+            SELECT prod_id
+            FROM page
+            INNER JOIN prod
+            ON 
+            page.prod_id = prod.id
+            AND  
+            page.title = prod.title
+            WHERE page.id = ?
+            ";
+            $mainpage = $this->db_query($sql, "i", array($page_id));
+            //ABORT IF
+            if (isset($mainpage)){
+                return "The page could not be deleted as it is the main page";
+            }
+
             //Delete Prod, Page, Page_sect and Page_sect_acc by joining them together
             $sql = "
             DELETE page_sect, page_sect_acc, page
@@ -474,8 +668,16 @@
                 header("location:" . urldecode($_COOKIE["lastpage"]));
             }
             else {
-                header("location:profile");
+                header("location:profile.php");
             }
+        }
+
+        //Redirects to a site with delay given in seconds
+        public function redirect_delay ($site, $seconds){
+            echo "<script>   
+            setTimeout(function () {
+            window.location.href = '" . $site . "';
+            }, " . ($seconds * 1000) .  "); </script>";
         }
 
         #endregion
@@ -661,11 +863,66 @@
             { return true; }
             else 
             { return false; }
+
         }
 
         #endregion
         //============================================================//
+        #region URL
 
+        //Returns the url for page
+        public function url_product_page ($prod_id, $page_title) {
+            return "prodview.php?id=" . $prod_id . "&page=" . $page_title;
+        }
+
+        //Returns the url for product
+        public function url_product ($prod_id) {
+            return "prodview.php?id=" . $prod_id;
+        }
+
+        #endregion
+        //============================================================//
+        #region TO
+
+        //Returns a html tag based on the font style
+        //NORMAL BOLD ITALIC
+        public function font_style_to_html ($font_style) {
+            if ($font_style === null) {
+                return null;
+            }
+
+            //SWITCH
+            if ($font_style == "normal"){
+                return "p";
+            }
+            if ($font_style == "bold"){
+                return "b";
+            }
+            if ($font_style == "italic"){
+                return "i";
+            }
+
+            return null;
+        }
+
+        #endregion
+        //============================================================//
+        #region JS
+        private $jquery_init = 0;
+
+        //Inserts the js script
+        public function js_section_edit (){
+
+            if ($this->jquery_init == 0){
+                echo '<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>';
+                $this->jquery_init = 1;
+            }
+
+            echo "<script src='js/sectionEdit.js' type='text/javascript'></script>";
+        }
+
+        #endregion
+        //============================================================//
 
         private $css = '
         <link rel="stylesheet" href="style/home.css">
